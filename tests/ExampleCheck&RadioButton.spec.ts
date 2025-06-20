@@ -25,7 +25,7 @@ test.describe('Check and Radio Buttons in the Automation Sandbox', () => {
         await test.step('Select a radio button', async () => {
             const radioButton = page.getByRole('radio', { name: 'Si' });
             await radioButton.check();
-            await expect(radioButton).toBeChecked();
+            await expect(radioButton,'The radio Button has not been checked').toBeChecked();
         });
     });
 });

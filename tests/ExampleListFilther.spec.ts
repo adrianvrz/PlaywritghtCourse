@@ -27,17 +27,23 @@ test.describe('Navegación en www.freerangetesters.com', () => {
                 // Como Filtrar por texto cuando tienes mas de un elemento con el mismo nombre 
                 await test.step(`Soy redirigido a la sección de título "${seccion.tituloEsperado}"`, async () => {
                     await expect(page).toHaveTitle(seccion.tituloEsperado);
-                    await page.getByRole('listitem')
+                    const listItemByText = page.getByRole('listitem')
                         .filter({ hasText: 'Playstation 5' })
-                        .getByRole('button', { name: 'Add to cart' })
-                        .click();
+                        .getByRole('button', { name: 'Add to cart' });
+                    await listItemByText.click();
+                    await expect(listItemByText).toBeVisible();
+
                     // Como Filtrar por locator cuando tienes mas de un elemento con el mismo nombre (Recomendado)
-                    await page.getByRole('listitem')
+                    const listItemByLocator = page.getByRole('listitem')
                         .filter({ has: page.getByRole('heading', { name: 'Playstation 5' }) })
-                        .getByRole('button', { name: 'Add to cart' })
-                        .click();
+                        .getByRole('button', { name: 'Add to cart' });
+                    await listItemByLocator.click();
+                    await expect(listItemByLocator).toBeVisible();
                 });
             });
+
+            // Verifica que el título de la página sea el esperado después de cada test
+            await expect(page).toHaveTitle(seccion.tituloEsperado);
         });
     }
 });

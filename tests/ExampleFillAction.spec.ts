@@ -11,7 +11,9 @@ test.describe('Actions in the Automation Sandbox', () => {
         });
 
         await test.step('Llenar el campo de texto', async () => {
+            await expect(page.getByRole('textbox', { name: 'Un aburrido texto' }),'Its Not Editable').toBeEditable();
             await page.getByRole('textbox', { name: 'Un aburrido texto' }).fill(RellenoDeCampoTexto);
+            await expect(page.getByRole('textbox', { name: 'Un aburrido texto' }), 'El campo de texto no se llenó correctamente').toHaveValue(RellenoDeCampoTexto);
         });
 
     });
